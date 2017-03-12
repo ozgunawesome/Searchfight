@@ -21,15 +21,15 @@ public class GoogleSearchEngineTest {
     }
 
     @Test
-    public void testStubbedSearchEngine() throws ExecutionException, InterruptedException {
+    public void testSearchEngine() throws ExecutionException, InterruptedException {
         GoogleSearchEngine engine = new GoogleSearchEngine();
         CompletableFuture<SearchResult> futureResult = new CompletableFuture<>();
 
-        engine.search("query", searchResult -> futureResult.complete(searchResult));
+        engine.search("java", searchResult -> futureResult.complete(searchResult));
 
         SearchResult searchResult = futureResult.get();
 
-        assertEquals("query", searchResult.getQuery());
+        assertEquals("java", searchResult.getQuery());
         assertEquals(engine, searchResult.getSearchEngine());
         assertNotNull(searchResult.getResults());
         assertNotEquals(-1, searchResult.getResults().compareTo(BigInteger.ZERO));
