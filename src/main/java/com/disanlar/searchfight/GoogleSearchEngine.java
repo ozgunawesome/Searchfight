@@ -17,8 +17,8 @@ import java.util.concurrent.CompletableFuture;
 public class GoogleSearchEngine implements SearchEngine {
 
     private static final String GOOGLE_API_URL = "https://www.googleapis.com/customsearch/v1?key={key}&cx={cx}&q={q}";
-    private static final String GOOGLE_API_KEY = "AIzaSyAtFYTGJU75wl7wGClrRNSg5BOcoelX6ZA";
-    private static final String GOOGLE_API_CX = "015054040185743824198:ghsu-zpcyta";
+    private static final String GOOGLE_API_KEY = "AIzaSyC97tOORfVCoLtq-WYqLEWJ50AfD4Gsa58";
+    private static final String GOOGLE_API_CX = "015054040185743824198:4bhg2ndx368";
 
     private final AsyncRestTemplate asyncRestTemplate = new AsyncRestTemplate();
 
