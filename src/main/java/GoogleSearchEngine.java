@@ -24,13 +24,13 @@ public class GoogleSearchEngine implements SearchEngine {
     private static class GoogleRawResultType {
         private static class QueriesType {
             private static class RequestType {
-                private String totalResults;
+                private BigInteger totalResults;
 
-                public String getTotalResults() {
+                public BigInteger getTotalResults() {
                     return totalResults;
                 }
 
-                public void setTotalResults(String totalResults) {
+                public void setTotalResults(BigInteger totalResults) {
                     this.totalResults = totalResults;
                 }
             }
@@ -65,8 +65,7 @@ public class GoogleSearchEngine implements SearchEngine {
                 .getForEntity(GOOGLE_API_URL, GoogleRawResultType.class, GOOGLE_API_KEY, GOOGLE_API_CX, searchTerm);
 
         futureResult.addCallback(successResult -> {
-            BigInteger totalResult = new BigInteger(successResult
-                    .getBody().getQueries().getRequest().get(0).getTotalResults());
+            BigInteger totalResult = successResult.getBody().getQueries().getRequest().get(0).getTotalResults();
 
             future.complete(new SearchResult.Builder()
                     .setQuery(searchTerm)

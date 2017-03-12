@@ -37,5 +37,4 @@ public class GoogleSearchEngineTest {
         assertNotNull(searchResult.getResults());
         assertNotEquals(-1, searchResult.getResults().compareTo(BigInteger.ZERO));
     }
-
 }
