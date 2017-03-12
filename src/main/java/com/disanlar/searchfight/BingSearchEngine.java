@@ -1,3 +1,5 @@
+package com.disanlar.searchfight;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -23,7 +25,7 @@ public class BingSearchEngine implements SearchEngine {
     private final AsyncRestTemplate asyncRestTemplate = new AsyncRestTemplate();
     private final HttpEntity<String> httpEntity;
 
-    public BingSearchEngine() {
+    BingSearchEngine() {
         HttpHeaders headers = new HttpHeaders();
         headers.set(BING_API_HEADER, BING_API_KEY);
         httpEntity = new HttpEntity<>("parameters", headers);
@@ -34,7 +36,7 @@ public class BingSearchEngine implements SearchEngine {
         private static class WebPagesType {
             private BigInteger totalEstimatedMatches;
 
-            public BigInteger getTotalEstimatedMatches() {
+            BigInteger getTotalEstimatedMatches() {
                 return totalEstimatedMatches;
             }
 
@@ -45,7 +47,7 @@ public class BingSearchEngine implements SearchEngine {
 
         private WebPagesType webPages;
 
-        public WebPagesType getWebPages() {
+        WebPagesType getWebPages() {
             return webPages;
         }
 
@@ -62,12 +64,10 @@ public class BingSearchEngine implements SearchEngine {
         ListenableFuture<ResponseEntity<BingRawResultType>> futureResult = asyncRestTemplate
                 .exchange(BING_API_URL, HttpMethod.GET, httpEntity, BingRawResultType.class, searchTerm);
 
-        futureResult.addCallback(successResult -> {
-            future.complete(new SearchResult.Builder()
-                    .setQuery(searchTerm)
-                    .setResults(successResult.getBody().getWebPages().getTotalEstimatedMatches())
-                    .setSearchEngine(this).build());
-        }, future::completeExceptionally);
+        futureResult.addCallback(successResult -> future.complete(new SearchResult.Builder()
+                .setQuery(searchTerm)
+                .setResults(successResult.getBody().getWebPages().getTotalEstimatedMatches())
+                .setSearchEngine(this).build()), future::completeExceptionally);
 
         return future;
     }

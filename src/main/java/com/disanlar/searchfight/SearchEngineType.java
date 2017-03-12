@@ -1,3 +1,5 @@
+package com.disanlar.searchfight;
+
 /**
  * Created by Özgün Ayaz on 2017-03-12.
  * License: CC BY-SA 4.0

@@ -1,7 +1,10 @@
+package com.disanlar.searchfight;
+
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
@@ -52,7 +55,7 @@ public class Application {
             // Total winner
             System.out.println("Total winner: " + finalResults.stream().collect(groupingBy(SearchResult::getQuery,
                     mapping(SearchResult::getResults, reducing(BigInteger.ZERO, BigInteger::add))))
-                    .entrySet().stream().max(comparing(x -> x.getValue())).get().getKey());
+                    .entrySet().stream().max(comparing(Map.Entry::getValue)).get().getKey());
 
         }).get();
     }

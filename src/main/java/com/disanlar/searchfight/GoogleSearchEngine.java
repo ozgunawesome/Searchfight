@@ -1,3 +1,5 @@
+package com.disanlar.searchfight;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.concurrent.ListenableFuture;
@@ -26,7 +28,7 @@ public class GoogleSearchEngine implements SearchEngine {
             private static class RequestType {
                 private BigInteger totalResults;
 
-                public BigInteger getTotalResults() {
+                BigInteger getTotalResults() {
                     return totalResults;
                 }
 
@@ -37,7 +39,7 @@ public class GoogleSearchEngine implements SearchEngine {
 
             private List<RequestType> request;
 
-            public List<RequestType> getRequest() {
+            List<RequestType> getRequest() {
                 return request;
             }
 
@@ -48,7 +50,7 @@ public class GoogleSearchEngine implements SearchEngine {
 
         private QueriesType queries;
 
-        public QueriesType getQueries() {
+        QueriesType getQueries() {
             return queries;
         }
 
@@ -64,15 +66,11 @@ public class GoogleSearchEngine implements SearchEngine {
         ListenableFuture<ResponseEntity<GoogleRawResultType>> futureResult = asyncRestTemplate
                 .getForEntity(GOOGLE_API_URL, GoogleRawResultType.class, GOOGLE_API_KEY, GOOGLE_API_CX, searchTerm);
 
-        futureResult.addCallback(successResult -> {
-            BigInteger totalResult = successResult.getBody().getQueries().getRequest().get(0).getTotalResults();
-
-            future.complete(new SearchResult.Builder()
-                    .setQuery(searchTerm)
-                    .setResults(totalResult)
-                    .setSearchEngine(this)
-                    .build());
-        }, future::completeExceptionally);
+        futureResult.addCallback(successResult -> future.complete(new SearchResult.Builder()
+                .setQuery(searchTerm)
+                .setResults(successResult.getBody().getQueries().getRequest().get(0).getTotalResults())
+                .setSearchEngine(this)
+                .build()), future::completeExceptionally);
 
         return future;
     }

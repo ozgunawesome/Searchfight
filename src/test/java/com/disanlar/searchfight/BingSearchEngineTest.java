@@ -1,9 +1,12 @@
+package com.disanlar.searchfight;
+
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.math.BigInteger;
 import java.util.concurrent.ExecutionException;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by Özgün Ayaz on 2017-03-12.
@@ -15,8 +18,8 @@ public class BingSearchEngineTest {
     @Test
     public void testNameAndType() {
         BingSearchEngine engine = new BingSearchEngine();
-        assertEquals("Bing", engine.getName());
-        assertEquals(SearchEngineType.BING, engine.getType());
+        Assert.assertEquals("Bing", engine.getName());
+        Assert.assertEquals(SearchEngineType.BING, engine.getType());
     }
 
     @Test
@@ -24,10 +27,10 @@ public class BingSearchEngineTest {
         BingSearchEngine engine = new BingSearchEngine();
         SearchResult searchResult = engine.search("query").get();
 
-        assertEquals("query", searchResult.getQuery());
-        assertEquals(engine, searchResult.getSearchEngine());
+        Assert.assertEquals("query", searchResult.getQuery());
+        Assert.assertEquals(engine, searchResult.getSearchEngine());
         assertNotNull(searchResult.getResults());
-        assertNotEquals(-1, searchResult.getResults().compareTo(BigInteger.ZERO));
+        Assert.assertNotEquals(-1, searchResult.getResults().compareTo(BigInteger.ZERO));
     }
 
 }

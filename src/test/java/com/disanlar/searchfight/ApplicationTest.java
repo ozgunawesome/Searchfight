@@ -1,3 +1,5 @@
+package com.disanlar.searchfight;
+
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;

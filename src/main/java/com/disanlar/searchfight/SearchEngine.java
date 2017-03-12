@@ -1,3 +1,5 @@
+package com.disanlar.searchfight;
+
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -5,7 +7,7 @@ import java.util.concurrent.CompletableFuture;
  * License: CC BY-SA 4.0
  * For more info visit https://creativecommons.org/licenses/by-sa/4.0/
  */
-public interface SearchEngine {
+interface SearchEngine {
 
     CompletableFuture<SearchResult> search(String searchTerm);
 

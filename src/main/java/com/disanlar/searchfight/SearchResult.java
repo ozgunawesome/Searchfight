@@ -1,3 +1,5 @@
+package com.disanlar.searchfight;
+
 import java.math.BigInteger;
 
 /**
@@ -5,21 +7,21 @@ import java.math.BigInteger;
  * License: CC BY-SA 4.0
  * For more info visit https://creativecommons.org/licenses/by-sa/4.0/
  */
-public class SearchResult {
+class SearchResult {
 
-    private String query;
-    private SearchEngine searchEngine;
-    private BigInteger results;
+    private final String query;
+    private final SearchEngine searchEngine;
+    private final BigInteger results;
 
-    public SearchEngine getSearchEngine() {
+    SearchEngine getSearchEngine() {
         return searchEngine;
     }
 
-    public BigInteger getResults() {
+    BigInteger getResults() {
         return results;
     }
 
-    public String getQuery() {
+    String getQuery() {
         return query;
     }
 
@@ -29,27 +31,27 @@ public class SearchResult {
         this.results = results;
     }
 
-    public static class Builder {
+    static class Builder {
         private String query;
         private BigInteger results;
         private SearchEngine searchEngine;
 
-        public Builder setQuery(String query) {
+        Builder setQuery(String query) {
             this.query = query;
             return this;
         }
 
-        public Builder setSearchEngine(SearchEngine searchEngine) {
+        Builder setSearchEngine(SearchEngine searchEngine) {
             this.searchEngine = searchEngine;
             return this;
         }
 
-        public Builder setResults(BigInteger results) {
+        Builder setResults(BigInteger results) {
             this.results = results;
             return this;
         }
 
-        public SearchResult build() {
+        SearchResult build() {
             return new SearchResult(query, results, searchEngine);
         }
     }
