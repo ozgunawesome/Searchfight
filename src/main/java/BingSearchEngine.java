@@ -1,3 +1,6 @@
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.springframework.web.client.AsyncRestTemplate;
+
 import java.math.BigInteger;
 import java.util.Random;
 import java.util.concurrent.CompletableFuture;
@@ -8,6 +11,33 @@ import java.util.concurrent.CompletableFuture;
  * For more info visit https://creativecommons.org/licenses/by-sa/4.0/
  */
 public class BingSearchEngine implements SearchEngine {
+
+    private final AsyncRestTemplate asyncRestTemplate = new AsyncRestTemplate();
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    private static class BingRawResultType {
+        private static class WebPagesType {
+            private BigInteger totalEstimatedMatches;
+
+            public BigInteger getTotalEstimatedMatches() {
+                return totalEstimatedMatches;
+            }
+
+            public void setTotalEstimatedMatches(BigInteger totalEstimatedMatches) {
+                this.totalEstimatedMatches = totalEstimatedMatches;
+            }
+        }
+
+        private WebPagesType webPages;
+
+        public WebPagesType getWebPages() {
+            return webPages;
+        }
+
+        public void setWebPages(WebPagesType webPages) {
+            this.webPages = webPages;
+        }
+    }
 
     @Override
     public CompletableFuture<SearchResult> search(String searchTerm) {

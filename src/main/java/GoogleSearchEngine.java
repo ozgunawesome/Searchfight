@@ -62,7 +62,7 @@ public class GoogleSearchEngine implements SearchEngine {
 
             ListenableFuture<ResponseEntity<GoogleRawResultType>> futureResult =
                     asyncRestTemplate.getForEntity(
-                            "https://www.googleapis.com/customsearch/v1?key={key}&cx={cx}&q={q}",
+                            Constants.GOOGLE_API_URL,
                             GoogleRawResultType.class,
                             Constants.GOOGLE_API_KEY,
                             Constants.GOOGLE_API_CX,
