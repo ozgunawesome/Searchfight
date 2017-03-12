@@ -1,8 +1,12 @@
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.web.client.AsyncRestTemplate;
 
 import java.math.BigInteger;
-import java.util.Random;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -12,7 +16,18 @@ import java.util.concurrent.CompletableFuture;
  */
 public class BingSearchEngine implements SearchEngine {
 
+    private static final String BING_API_URL = "https://api.cognitive.microsoft.com/bing/v5.0/search?q={q}";
+    private static final String BING_API_HEADER = "Ocp-Apim-Subscription-Key";
+    private static final String BING_API_KEY = "027774d2d68545c29da1196b52a02cfc";
+
     private final AsyncRestTemplate asyncRestTemplate = new AsyncRestTemplate();
+    private final HttpEntity<String> httpEntity;
+
+    public BingSearchEngine() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set(BING_API_HEADER, BING_API_KEY);
+        httpEntity = new HttpEntity<>("parameters", headers);
+    }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     private static class BingRawResultType {
@@ -44,11 +59,15 @@ public class BingSearchEngine implements SearchEngine {
 
         CompletableFuture<SearchResult> future = new CompletableFuture<>();
 
-        future.complete(new SearchResult.Builder()
-                .setQuery(searchTerm)
-                .setSearchEngine(this)
-                .setResults(new BigInteger(32, new Random()).abs())
-                .build());
+        ListenableFuture<ResponseEntity<BingRawResultType>> futureResult = asyncRestTemplate
+                .exchange(BING_API_URL, HttpMethod.GET, httpEntity, BingRawResultType.class, searchTerm);
+
+        futureResult.addCallback(successResult -> {
+            future.complete(new SearchResult.Builder()
+                    .setQuery(searchTerm)
+                    .setResults(successResult.getBody().getWebPages().getTotalEstimatedMatches())
+                    .setSearchEngine(this).build());
+        }, future::completeExceptionally);
 
         return future;
     }

@@ -14,6 +14,10 @@ import java.util.concurrent.CompletableFuture;
  */
 public class GoogleSearchEngine implements SearchEngine {
 
+    private static final String GOOGLE_API_URL = "https://www.googleapis.com/customsearch/v1?key={key}&cx={cx}&q={q}";
+    private static final String GOOGLE_API_KEY = "AIzaSyAtFYTGJU75wl7wGClrRNSg5BOcoelX6ZA";
+    private static final String GOOGLE_API_CX = "015054040185743824198:ghsu-zpcyta";
+
     private final AsyncRestTemplate asyncRestTemplate = new AsyncRestTemplate();
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -58,11 +62,9 @@ public class GoogleSearchEngine implements SearchEngine {
         CompletableFuture<SearchResult> future = new CompletableFuture<>();
 
         ListenableFuture<ResponseEntity<GoogleRawResultType>> futureResult = asyncRestTemplate
-                .getForEntity(Constants.GOOGLE_API_URL, GoogleRawResultType.class, Constants.GOOGLE_API_KEY,
-                        Constants.GOOGLE_API_CX, searchTerm);
+                .getForEntity(GOOGLE_API_URL, GoogleRawResultType.class, GOOGLE_API_KEY, GOOGLE_API_CX, searchTerm);
 
         futureResult.addCallback(successResult -> {
-
             BigInteger totalResult = new BigInteger(successResult
                     .getBody().getQueries().getRequest().get(0).getTotalResults());
 
@@ -71,8 +73,7 @@ public class GoogleSearchEngine implements SearchEngine {
                     .setResults(totalResult)
                     .setSearchEngine(this)
                     .build());
-
-        }, Throwable::printStackTrace);
+        }, future::completeExceptionally);
 
         return future;
     }

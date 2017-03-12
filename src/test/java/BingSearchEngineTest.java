@@ -20,7 +20,7 @@ public class BingSearchEngineTest {
     }
 
     @Test
-    public void testStubbedSearchEngine() throws ExecutionException, InterruptedException {
+    public void testBingSearchEngine() throws ExecutionException, InterruptedException {
         BingSearchEngine engine = new BingSearchEngine();
         SearchResult searchResult = engine.search("query").get();
 
