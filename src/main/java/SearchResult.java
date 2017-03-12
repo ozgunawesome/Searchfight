@@ -29,27 +29,27 @@ public class SearchResult {
         this.results = results;
     }
 
-    public class SearchResultBuilder {
+    public static class Builder {
         private String query;
         private BigInteger results;
         private SearchEngine searchEngine;
 
-        public SearchResultBuilder setQuery(String query) {
+        public Builder setQuery(String query) {
             this.query = query;
             return this;
         }
 
-        public SearchResultBuilder setSearchEngine(SearchEngine searchEngine) {
+        public Builder setSearchEngine(SearchEngine searchEngine) {
             this.searchEngine = searchEngine;
             return this;
         }
 
-        public SearchResultBuilder setResults(BigInteger results) {
+        public Builder setResults(BigInteger results) {
             this.results = results;
             return this;
         }
 
-        public SearchResult createSearchResult() {
+        public SearchResult build() {
             return new SearchResult(query, results, searchEngine);
         }
     }
