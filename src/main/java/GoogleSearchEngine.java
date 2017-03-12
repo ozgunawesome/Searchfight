@@ -3,9 +3,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.web.client.AsyncRestTemplate;
 
-import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
-import java.net.URLEncoder;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -57,35 +55,26 @@ public class GoogleSearchEngine implements SearchEngine {
 
     @Override
     public CompletableFuture<SearchResult> search(String searchTerm) {
-        try {
-            CompletableFuture<SearchResult> future = new CompletableFuture<>();
+        CompletableFuture<SearchResult> future = new CompletableFuture<>();
 
-            ListenableFuture<ResponseEntity<GoogleRawResultType>> futureResult =
-                    asyncRestTemplate.getForEntity(
-                            Constants.GOOGLE_API_URL,
-                            GoogleRawResultType.class,
-                            Constants.GOOGLE_API_KEY,
-                            Constants.GOOGLE_API_CX,
-                            URLEncoder.encode(searchTerm, "UTF-8"));
+        ListenableFuture<ResponseEntity<GoogleRawResultType>> futureResult = asyncRestTemplate
+                .getForEntity(Constants.GOOGLE_API_URL, GoogleRawResultType.class, Constants.GOOGLE_API_KEY,
+                        Constants.GOOGLE_API_CX, searchTerm);
 
-            futureResult.addCallback(successResult -> {
+        futureResult.addCallback(successResult -> {
 
-                BigInteger totalResult = new BigInteger(successResult
-                        .getBody().getQueries().getRequest().get(0).getTotalResults());
+            BigInteger totalResult = new BigInteger(successResult
+                    .getBody().getQueries().getRequest().get(0).getTotalResults());
 
-                future.complete(new SearchResult.Builder()
-                        .setQuery(searchTerm)
-                        .setResults(totalResult)
-                        .setSearchEngine(this)
-                        .build());
+            future.complete(new SearchResult.Builder()
+                    .setQuery(searchTerm)
+                    .setResults(totalResult)
+                    .setSearchEngine(this)
+                    .build());
 
-            }, Throwable::printStackTrace);
+        }, Throwable::printStackTrace);
 
-            return future;
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-            return null;
-        }
+        return future;
     }
 
     @Override

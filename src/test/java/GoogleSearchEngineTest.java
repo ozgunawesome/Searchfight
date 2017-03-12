@@ -20,6 +20,13 @@ public class GoogleSearchEngineTest {
     }
 
     @Test
+    public void testUrlEncoding() throws ExecutionException, InterruptedException {
+        // If the URL encoding is working, the string "%21" will be encoded into its URL representation
+        // and will not be equal to the "!" character
+        assertNotEquals("!", new GoogleSearchEngine().search("%21").get().getQuery());
+    }
+
+    @Test
     public void testSearchEngine() throws ExecutionException, InterruptedException {
         GoogleSearchEngine engine = new GoogleSearchEngine();
 
