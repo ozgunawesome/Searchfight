@@ -1,6 +1,6 @@
 import java.math.BigInteger;
 import java.util.Random;
-import java.util.function.Consumer;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Created by Özgün Ayaz on 2017-03-12.
@@ -10,15 +10,17 @@ import java.util.function.Consumer;
 public class BingSearchEngine implements SearchEngine {
 
     @Override
-    public void search(String searchTerm, Consumer<SearchResult> callback) {
+    public CompletableFuture<SearchResult> search(String searchTerm) {
 
-        // method stub!
-        callback.accept(new SearchResult.Builder()
+        CompletableFuture<SearchResult> future = new CompletableFuture<>();
+
+        future.complete(new SearchResult.Builder()
                 .setQuery(searchTerm)
                 .setSearchEngine(this)
                 .setResults(new BigInteger(32, new Random()).abs())
                 .build());
 
+        return future;
     }
 
     @Override

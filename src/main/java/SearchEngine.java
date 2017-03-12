@@ -1,4 +1,4 @@
-import java.util.function.Consumer;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Created by Özgün Ayaz on 2017-03-12.
@@ -7,7 +7,7 @@ import java.util.function.Consumer;
  */
 public interface SearchEngine {
 
-    void search(String searchTerm, Consumer<SearchResult> callback);
+    CompletableFuture<SearchResult> search(String searchTerm);
 
     String getName();
 

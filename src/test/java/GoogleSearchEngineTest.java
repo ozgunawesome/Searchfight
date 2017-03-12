@@ -1,7 +1,6 @@
 import org.junit.Test;
 
 import java.math.BigInteger;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 import static org.junit.Assert.*;
@@ -23,11 +22,8 @@ public class GoogleSearchEngineTest {
     @Test
     public void testSearchEngine() throws ExecutionException, InterruptedException {
         GoogleSearchEngine engine = new GoogleSearchEngine();
-        CompletableFuture<SearchResult> futureResult = new CompletableFuture<>();
 
-        engine.search("java", searchResult -> futureResult.complete(searchResult));
-
-        SearchResult searchResult = futureResult.get();
+        SearchResult searchResult = engine.search("java").get();
 
         assertEquals("java", searchResult.getQuery());
         assertEquals(engine, searchResult.getSearchEngine());

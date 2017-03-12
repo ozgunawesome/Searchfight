@@ -1,7 +1,6 @@
 import org.junit.Test;
 
 import java.math.BigInteger;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 import static org.junit.Assert.*;
@@ -23,11 +22,7 @@ public class BingSearchEngineTest {
     @Test
     public void testStubbedSearchEngine() throws ExecutionException, InterruptedException {
         BingSearchEngine engine = new BingSearchEngine();
-        CompletableFuture<SearchResult> futureResult = new CompletableFuture<>();
-
-        engine.search("query", searchResult -> futureResult.complete(searchResult));
-
-        SearchResult searchResult = futureResult.get();
+        SearchResult searchResult = engine.search("query").get();
 
         assertEquals("query", searchResult.getQuery());
         assertEquals(engine, searchResult.getSearchEngine());
