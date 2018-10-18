@@ -1,6 +1,7 @@
 package com.disanlar.searchfight;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.math.BigInteger;
@@ -13,6 +14,7 @@ import static org.junit.Assert.assertNotNull;
  * License: CC BY-SA 4.0
  * For more info visit https://creativecommons.org/licenses/by-sa/4.0/
  */
+@Ignore
 public class BingSearchEngineTest {
 
     @Test
