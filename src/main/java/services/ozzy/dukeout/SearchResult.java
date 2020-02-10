@@ -7,6 +7,15 @@ import java.math.BigInteger;
  * License: CC BY-SA 4.0
  * For more info visit https://creativecommons.org/licenses/by-sa/4.0/
  */
+
+/**
+ * Common search result class, containing references to;
+ *   - the search query
+ *   - the SearchEngine instance that invoked it
+ *   - number of results
+ *
+ * Intended as return type for abstract {@link SearchEngine}
+ */
 class SearchResult {
 
     private final String query;
