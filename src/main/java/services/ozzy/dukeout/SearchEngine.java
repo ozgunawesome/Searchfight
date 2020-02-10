@@ -1,5 +1,7 @@
 package services.ozzy.dukeout;
 
+import org.springframework.web.client.AsyncRestTemplate;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -13,6 +15,7 @@ import java.util.concurrent.CompletableFuture;
 abstract class SearchEngine {
 
     final Properties properties;
+    final AsyncRestTemplate asyncRestTemplate = new AsyncRestTemplate();
 
     SearchEngine() {
         try (InputStream input = SearchEngine.class.getClassLoader().getResourceAsStream("secrets.properties")) {

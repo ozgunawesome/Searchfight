@@ -20,7 +20,6 @@ import java.util.concurrent.CompletableFuture;
 public class BingV7SearchEngine extends SearchEngine {
 
     private final String bingApiURL;
-    private final AsyncRestTemplate asyncRestTemplate = new AsyncRestTemplate();
     private final HttpEntity<String> httpEntity;
 
     BingV7SearchEngine() {

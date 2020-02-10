@@ -7,6 +7,5 @@ package services.ozzy.dukeout;
  */
 public enum SearchEngineType {
     GOOGLE,
-    BING_V5,
     BING_V7
 }

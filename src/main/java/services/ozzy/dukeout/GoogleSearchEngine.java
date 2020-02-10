@@ -20,7 +20,6 @@ public class GoogleSearchEngine extends SearchEngine {
 
     private static final String GOOGLE_API_URL = "https://www.googleapis.com/customsearch/v1?key={key}&cx={cx}&q={q}";
 
-    private final AsyncRestTemplate asyncRestTemplate = new AsyncRestTemplate();
     private final String GOOGLE_API_KEY;
     private final String GOOGLE_API_CX;
 
