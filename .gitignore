@@ -2,3 +2,4 @@
 .idea
 src/main/resources/secrets.properties
 target
+.DS_Store
