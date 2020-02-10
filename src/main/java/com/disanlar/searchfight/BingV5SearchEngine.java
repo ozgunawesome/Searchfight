@@ -9,6 +9,7 @@ import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.web.client.AsyncRestTemplate;
 
 import java.math.BigInteger;
+import java.util.Properties;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -16,16 +17,23 @@ import java.util.concurrent.CompletableFuture;
  * License: CC BY-SA 4.0
  * For more info visit https://creativecommons.org/licenses/by-sa/4.0/
  */
-public class BingSearchEngine implements SearchEngine {
+@Deprecated
+public class BingV5SearchEngine extends SearchEngine {
 
+    /*
+         API v5 is deprecated (except for Azure accounts grandfathered in)
+         Use the v7 API for any further development.
+     */
     private static final String BING_API_URL = "https://api.cognitive.microsoft.com/bing/v5.0/search?q={q}";
     private static final String BING_API_HEADER = "Ocp-Apim-Subscription-Key";
-    private static final String BING_API_KEY = "027774d2d68545c29da1196b52a02cfc";
+    private static final String BING_API_KEY = "<secret>";
 
     private final AsyncRestTemplate asyncRestTemplate = new AsyncRestTemplate();
     private final HttpEntity<String> httpEntity;
 
-    BingSearchEngine() {
+    @Deprecated
+    BingV5SearchEngine() {
+        super();
         HttpHeaders headers = new HttpHeaders();
         headers.set(BING_API_HEADER, BING_API_KEY);
         httpEntity = new HttpEntity<>("parameters", headers);
@@ -74,11 +82,11 @@ public class BingSearchEngine implements SearchEngine {
 
     @Override
     public String getName() {
-        return "Bing";
+        return "Bing_V5";
     }
 
     @Override
     public SearchEngineType getType() {
-        return SearchEngineType.BING;
+        return SearchEngineType.BING_V5;
     }
 }

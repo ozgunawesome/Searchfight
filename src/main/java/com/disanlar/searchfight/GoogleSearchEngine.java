@@ -7,6 +7,7 @@ import org.springframework.web.client.AsyncRestTemplate;
 
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Properties;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -14,13 +15,19 @@ import java.util.concurrent.CompletableFuture;
  * License: CC BY-SA 4.0
  * For more info visit https://creativecommons.org/licenses/by-sa/4.0/
  */
-public class GoogleSearchEngine implements SearchEngine {
+public class GoogleSearchEngine extends SearchEngine {
 
     private static final String GOOGLE_API_URL = "https://www.googleapis.com/customsearch/v1?key={key}&cx={cx}&q={q}";
-    private static final String GOOGLE_API_KEY = "AIzaSyC97tOORfVCoLtq-WYqLEWJ50AfD4Gsa58";
-    private static final String GOOGLE_API_CX = "015054040185743824198:4bhg2ndx368";
 
     private final AsyncRestTemplate asyncRestTemplate = new AsyncRestTemplate();
+    private final String GOOGLE_API_KEY;
+    private final String GOOGLE_API_CX;
+
+    GoogleSearchEngine() {
+        super();
+        GOOGLE_API_CX = properties.getProperty("search.google.cx");
+        GOOGLE_API_KEY = properties.getProperty("search.google.key");
+    }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     private static class GoogleRawResultType {

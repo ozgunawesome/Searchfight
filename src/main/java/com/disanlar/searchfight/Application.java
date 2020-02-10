@@ -1,5 +1,7 @@
 package com.disanlar.searchfight;
 
+import com.sun.tools.internal.jxc.ap.Const;
+
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,7 +27,7 @@ public class Application {
             throw new IllegalArgumentException("At least 2 arguments are required.");
         }
 
-        List<SearchEngine> searchEngines = Arrays.asList(new GoogleSearchEngine(), new BingSearchEngine());
+        List<SearchEngine> searchEngines = Arrays.asList(new GoogleSearchEngine(), new BingV7SearchEngine());
         List<CompletableFuture<SearchResult>> futureResults = new ArrayList<>();
 
         for (SearchEngine searchEngine : searchEngines) {

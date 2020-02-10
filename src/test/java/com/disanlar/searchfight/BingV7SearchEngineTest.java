@@ -15,18 +15,18 @@ import static org.junit.Assert.assertNotNull;
  * For more info visit https://creativecommons.org/licenses/by-sa/4.0/
  */
 @Ignore
-public class BingSearchEngineTest {
+public class BingV7SearchEngineTest {
 
     @Test
     public void testNameAndType() {
-        BingSearchEngine engine = new BingSearchEngine();
+        BingV7SearchEngine engine = new BingV7SearchEngine();
         Assert.assertEquals("Bing", engine.getName());
-        Assert.assertEquals(SearchEngineType.BING, engine.getType());
+        Assert.assertEquals(SearchEngineType.BING_V7, engine.getType());
     }
 
     @Test
     public void testBingSearchEngine() throws ExecutionException, InterruptedException {
-        BingSearchEngine engine = new BingSearchEngine();
+        BingV7SearchEngine engine = new BingV7SearchEngine();
         SearchResult searchResult = engine.search("query").get();
 
         Assert.assertEquals("query", searchResult.getQuery());

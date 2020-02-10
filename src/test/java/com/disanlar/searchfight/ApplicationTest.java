@@ -19,6 +19,7 @@ public class ApplicationTest {
     @Test
     public void runApplication() {
         PrintStream out = System.out;
+        String testResults = null;
 
         try {
             Logger.getLogger(this.getClass().getName()).info("Hooking STDOUT to check results, please wait..");
@@ -26,14 +27,15 @@ public class ApplicationTest {
             System.setOut(new PrintStream(byteArrayOutputStream));
             Application.main("java", ".net");
 
+            testResults = byteArrayOutputStream.toString();
             // apparently ".net" will always win since Google will ignore the dot and crush it with 10x results
-            // otherwise pretty useless test
-            assertTrue(byteArrayOutputStream.toString().contains("Total winner: .net"));
+            assertTrue(testResults.contains("Total winner: .net"));
 
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         } finally {
             System.setOut(out);
+            System.out.println(testResults);
         }
     }
 

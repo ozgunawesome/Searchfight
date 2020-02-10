@@ -7,5 +7,6 @@ package com.disanlar.searchfight;
  */
 public enum SearchEngineType {
     GOOGLE,
-    BING
+    BING_V5,
+    BING_V7
 }
