@@ -1,4 +1,4 @@
-package com.disanlar.searchfight;
+package services.ozzy.dukeout;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.http.ResponseEntity;
@@ -7,7 +7,6 @@ import org.springframework.web.client.AsyncRestTemplate;
 
 import java.math.BigInteger;
 import java.util.List;
-import java.util.Properties;
 import java.util.concurrent.CompletableFuture;
 
 /**

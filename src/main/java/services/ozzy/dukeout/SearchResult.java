@@ -1,4 +1,4 @@
-package com.disanlar.searchfight;
+package services.ozzy.dukeout;
 
 import java.math.BigInteger;
 

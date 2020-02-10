@@ -1,4 +1,4 @@
-package com.disanlar.searchfight;
+package services.ozzy.dukeout;
 
 /**
  * Created by Özgün Ayaz on 2017-03-12.

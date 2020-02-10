@@ -1,6 +1,4 @@
-package com.disanlar.searchfight;
-
-import com.sun.tools.internal.jxc.ap.Const;
+package services.ozzy.dukeout;
 
 import java.math.BigInteger;
 import java.util.ArrayList;

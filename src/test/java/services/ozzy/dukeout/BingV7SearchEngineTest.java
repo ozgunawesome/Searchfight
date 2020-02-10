@@ -1,4 +1,4 @@
-package com.disanlar.searchfight;
+package services.ozzy.dukeout;
 
 import org.junit.Assert;
 import org.junit.Ignore;
@@ -14,13 +14,12 @@ import static org.junit.Assert.assertNotNull;
  * License: CC BY-SA 4.0
  * For more info visit https://creativecommons.org/licenses/by-sa/4.0/
  */
-@Ignore
 public class BingV7SearchEngineTest {
 
     @Test
     public void testNameAndType() {
         BingV7SearchEngine engine = new BingV7SearchEngine();
-        Assert.assertEquals("Bing", engine.getName());
+        Assert.assertEquals("Bing_V7", engine.getName());
         Assert.assertEquals(SearchEngineType.BING_V7, engine.getType());
     }
 

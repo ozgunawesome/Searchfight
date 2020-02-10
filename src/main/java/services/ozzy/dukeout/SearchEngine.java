@@ -1,4 +1,4 @@
-package com.disanlar.searchfight;
+package services.ozzy.dukeout;
 
 import java.io.IOException;
 import java.io.InputStream;

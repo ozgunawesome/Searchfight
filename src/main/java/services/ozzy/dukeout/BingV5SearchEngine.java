@@ -1,4 +1,4 @@
-package com.disanlar.searchfight;
+package services.ozzy.dukeout;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.http.HttpEntity;
@@ -8,30 +8,33 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.web.client.AsyncRestTemplate;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.math.BigInteger;
-import java.util.Properties;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * Created by Özgün Ayaz on 2019-02-10.
+ * Created by Özgün Ayaz on 2017-03-12.
  * License: CC BY-SA 4.0
  * For more info visit https://creativecommons.org/licenses/by-sa/4.0/
  */
-public class BingV7SearchEngine extends SearchEngine {
+@Deprecated
+public class BingV5SearchEngine extends SearchEngine {
 
-    private final String bingApiURL;
+    /*
+         API v5 is deprecated (except for Azure accounts grandfathered in)
+         Use the v7 API for any further development.
+     */
+    private static final String BING_API_URL = "https://api.cognitive.microsoft.com/bing/v5.0/search?q={q}";
+    private static final String BING_API_HEADER = "Ocp-Apim-Subscription-Key";
+    private static final String BING_API_KEY = "<secret>";
+
     private final AsyncRestTemplate asyncRestTemplate = new AsyncRestTemplate();
     private final HttpEntity<String> httpEntity;
 
-    BingV7SearchEngine() {
+    @Deprecated
+    BingV5SearchEngine() {
         super();
-        bingApiURL = properties.getProperty("search.bing_v7.endpoint");
-
-        // Set required HTTP header for Bing authentication
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Ocp-Apim-Subscription-Key", properties.getProperty("search.bing_v7.key"));
+        headers.set(BING_API_HEADER, BING_API_KEY);
         httpEntity = new HttpEntity<>("parameters", headers);
     }
 
@@ -66,7 +69,7 @@ public class BingV7SearchEngine extends SearchEngine {
         CompletableFuture<SearchResult> future = new CompletableFuture<>();
 
         ListenableFuture<ResponseEntity<BingRawResultType>> futureResult = asyncRestTemplate
-                .exchange(bingApiURL, HttpMethod.GET, httpEntity, BingRawResultType.class, searchTerm);
+                .exchange(BING_API_URL, HttpMethod.GET, httpEntity, BingRawResultType.class, searchTerm);
 
         futureResult.addCallback(successResult -> future.complete(new SearchResult.Builder()
                 .setQuery(searchTerm)
@@ -78,11 +81,11 @@ public class BingV7SearchEngine extends SearchEngine {
 
     @Override
     public String getName() {
-        return "Bing_V7";
+        return "Bing_V5";
     }
 
     @Override
     public SearchEngineType getType() {
-        return SearchEngineType.BING_V7;
+        return SearchEngineType.BING_V5;
     }
 }
