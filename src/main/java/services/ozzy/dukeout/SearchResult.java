@@ -1,5 +1,7 @@
 package services.ozzy.dukeout;
 
+import lombok.Getter;
+
 import java.math.BigInteger;
 
 /**
@@ -16,24 +18,13 @@ import java.math.BigInteger;
  *
  * Intended as return type for abstract {@link SearchEngine}
  */
+@Getter
 class SearchResult {
 
     private final String query;
     private final SearchEngine searchEngine;
     private final BigInteger results;
-
-    SearchEngine getSearchEngine() {
-        return searchEngine;
-    }
-
-    BigInteger getResults() {
-        return results;
-    }
-
-    String getQuery() {
-        return query;
-    }
-
+    
     private SearchResult(String query, BigInteger results, SearchEngine searchEngine) {
         this.query = query;
         this.searchEngine = searchEngine;

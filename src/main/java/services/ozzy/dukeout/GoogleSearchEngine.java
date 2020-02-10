@@ -1,6 +1,8 @@
 package services.ozzy.dukeout;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Data;
+import lombok.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.web.client.AsyncRestTemplate;
@@ -29,40 +31,17 @@ public class GoogleSearchEngine extends SearchEngine {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
+    @Data
     private static class GoogleRawResultType {
+        @Data
         private static class QueriesType {
+            @Data
             private static class RequestType {
                 private BigInteger totalResults;
-
-                BigInteger getTotalResults() {
-                    return totalResults;
-                }
-
-                public void setTotalResults(BigInteger totalResults) {
-                    this.totalResults = totalResults;
-                }
             }
-
             private List<RequestType> request;
-
-            List<RequestType> getRequest() {
-                return request;
-            }
-
-            public void setRequest(List<RequestType> request) {
-                this.request = request;
-            }
         }
-
         private QueriesType queries;
-
-        QueriesType getQueries() {
-            return queries;
-        }
-
-        public void setQueries(QueriesType queries) {
-            this.queries = queries;
-        }
     }
 
     @Override

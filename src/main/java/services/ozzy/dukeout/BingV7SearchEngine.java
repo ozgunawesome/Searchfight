@@ -1,6 +1,7 @@
 package services.ozzy.dukeout;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Data;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -33,28 +34,13 @@ public class BingV7SearchEngine extends SearchEngine {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
+    @Data
     private static class BingRawResultType {
+        @Data
         private static class WebPagesType {
             private BigInteger totalEstimatedMatches;
-
-            BigInteger getTotalEstimatedMatches() {
-                return totalEstimatedMatches;
-            }
-
-            public void setTotalEstimatedMatches(BigInteger totalEstimatedMatches) {
-                this.totalEstimatedMatches = totalEstimatedMatches;
-            }
         }
-
         private WebPagesType webPages;
-
-        WebPagesType getWebPages() {
-            return webPages;
-        }
-
-        public void setWebPages(WebPagesType webPages) {
-            this.webPages = webPages;
-        }
     }
 
     @Override

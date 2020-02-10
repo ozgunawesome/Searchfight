@@ -16,9 +16,8 @@ abstract class SearchEngine {
 
     SearchEngine() {
         try (InputStream input = SearchEngine.class.getClassLoader().getResourceAsStream("secrets.properties")) {
-            Properties props = new Properties();
-            props.load(input);
-            this.properties = props;
+            this.properties = new Properties();
+            this.properties.load(input);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
