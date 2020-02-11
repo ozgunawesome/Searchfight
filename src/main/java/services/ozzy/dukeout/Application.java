@@ -5,6 +5,7 @@ import java.text.NumberFormat;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static java.util.Comparator.comparing;
@@ -25,10 +26,10 @@ public class Application {
 
         // Search engine instances.
         // Since the underlying REST caller is async, the results will be fetched asynchronously.
-        List<SearchEngine> searchEngines = Arrays.asList(new GoogleSearchEngine(), new BingV7SearchEngine());
+        List<SearchEngine> searchEngines = Arrays.stream(SearchEngines.values()).map(SearchEngines::getInstance).collect(toList());
 
         // Empty list that will contain the search results
-        List<CompletableFuture<SearchResult>> futureResults = new ArrayList<>();
+        List<CompletableFuture<SearchResult>> futureResults = new ArrayList<>(searchEngines.size() * args.length); // exactly this many entries needed
 
         // Create a future with the search result for each term from each search engine
         for (SearchEngine searchEngine : searchEngines) {

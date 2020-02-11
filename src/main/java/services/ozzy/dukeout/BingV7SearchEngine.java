@@ -84,7 +84,7 @@ public class BingV7SearchEngine extends SearchEngine {
     }
 
     @Override
-    public SearchEngineType getType() {
-        return SearchEngineType.BING_V7;
+    public SearchEngines getType() {
+        return SearchEngines.BING_V7;
     }
 }

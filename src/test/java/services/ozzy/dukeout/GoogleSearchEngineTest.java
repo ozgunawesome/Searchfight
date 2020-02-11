@@ -1,12 +1,11 @@
 package services.ozzy.dukeout;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.math.BigInteger;
 import java.util.concurrent.ExecutionException;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 /**
  * Created by Özgün Ayaz on 2017-03-12.
@@ -18,15 +17,15 @@ public class GoogleSearchEngineTest {
     @Test
     public void testNameAndType() {
         GoogleSearchEngine engine = new GoogleSearchEngine();
-        Assert.assertEquals("Google", engine.getName());
-        Assert.assertEquals(SearchEngineType.GOOGLE, engine.getType());
+        assertEquals("Google", engine.getName());
+        assertEquals(SearchEngines.GOOGLE, engine.getType());
     }
 
     @Test
     public void testUrlEncoding() throws ExecutionException, InterruptedException {
         // If the URL encoding is working, the string "%21" will be encoded into its URL representation
         // and will not be equal to the "!" character
-        Assert.assertNotEquals("!", new GoogleSearchEngine().search("%21").get().getQuery());
+        assertNotEquals("!", new GoogleSearchEngine().search("%21").get().getQuery());
     }
 
     @Test
@@ -35,9 +34,9 @@ public class GoogleSearchEngineTest {
 
         SearchResult searchResult = engine.search("java").get();
 
-        Assert.assertEquals("java", searchResult.getQuery());
-        Assert.assertEquals(engine, searchResult.getSearchEngine());
+        assertEquals("java", searchResult.getQuery());
+        assertEquals(engine, searchResult.getSearchEngine());
         assertNotNull(searchResult.getResults());
-        Assert.assertNotEquals(-1, searchResult.getResults().compareTo(BigInteger.ZERO));
+        assertNotEquals(-1, searchResult.getResults().compareTo(BigInteger.ZERO));
     }
 }

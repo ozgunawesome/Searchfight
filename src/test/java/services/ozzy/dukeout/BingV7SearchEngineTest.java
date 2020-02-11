@@ -20,7 +20,7 @@ public class BingV7SearchEngineTest {
     public void testNameAndType() {
         BingV7SearchEngine engine = new BingV7SearchEngine();
         Assert.assertEquals("Bing_V7", engine.getName());
-        Assert.assertEquals(SearchEngineType.BING_V7, engine.getType());
+        Assert.assertEquals(SearchEngines.BING_V7, engine.getType());
     }
 
     @Test

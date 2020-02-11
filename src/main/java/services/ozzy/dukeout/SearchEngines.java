@@ -7,14 +7,16 @@ import lombok.Getter;
  * License: CC BY-SA 4.0
  * For more info visit https://creativecommons.org/licenses/by-sa/4.0/
  */
-public enum SearchEngineType {
-    GOOGLE("Google"),
-    BING_V7("Bing_V7");
+@Getter
+public enum SearchEngines {
+    GOOGLE("Google", new GoogleSearchEngine()),
+    BING_V7("Bing_V7", new BingV7SearchEngine());
 
-    @Getter
     private String name;
+    private SearchEngine instance;
 
-    SearchEngineType(String name) {
+    SearchEngines(String name, SearchEngine instance) {
         this.name = name;
+        this.instance = instance;
     }
 }

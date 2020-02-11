@@ -30,6 +30,6 @@ abstract class SearchEngine {
 
     abstract String getName();
 
-    abstract SearchEngineType getType();
+    abstract SearchEngines getType();
 
 }

@@ -1,5 +1,6 @@
 package services.ozzy.dukeout;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -75,13 +76,15 @@ public class ApplicationTest {
      */
     @Test
     public void testApplicationWithLotsOfArguments() {
+        assertEquals(2, SearchEngines.values().length); // Update this test if you add more search engines
+
         final String[] argumentsToSearch = {"java", ".net", "python", "javascript", "go", "kotlin", "perl", "ruby", "\"bill gates\"", "\"jeff bezos\"", "folding@home"};
 
         final AtomicInteger linesThatMatch = new AtomicInteger(0);
         final char groupingSeparator = NumberFormatUtil.groupingSeparator();
         final Pattern pattern = Pattern.compile("(.*): (.*): [0-9[" + groupingSeparator + "]]+, (.*): [0-9[" + groupingSeparator + "]]+");
         final List<String> argumentsArrayAsList = Arrays.asList(argumentsToSearch);
-        final List<String> allSearchEngineNames = Arrays.stream(SearchEngineType.values()).map(SearchEngineType::getName).collect(Collectors.toList());
+        final List<String> allSearchEngineNames = Arrays.stream(SearchEngines.values()).map(SearchEngines::getName).collect(Collectors.toList());
 
         testApplicationWithArguments((out, err) -> {
             assertTrue(out.contains("Total winner:")); // the test went all the way successfully and had a winner

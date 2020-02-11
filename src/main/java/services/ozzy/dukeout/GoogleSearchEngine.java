@@ -2,10 +2,8 @@ package services.ozzy.dukeout;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
-import lombok.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.concurrent.ListenableFuture;
-import org.springframework.web.client.AsyncRestTemplate;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -65,7 +63,7 @@ public class GoogleSearchEngine extends SearchEngine {
     }
 
     @Override
-    public SearchEngineType getType() {
-        return SearchEngineType.GOOGLE;
+    public SearchEngines getType() {
+        return SearchEngines.GOOGLE;
     }
 }
