@@ -78,7 +78,8 @@ public class ApplicationTest {
         final String[] argumentsToSearch = {"java", ".net", "python", "javascript", "go", "kotlin", "perl", "ruby", "\"bill gates\"", "\"jeff bezos\"", "folding@home"};
 
         final AtomicInteger linesThatMatch = new AtomicInteger(0);
-        final Pattern pattern = Pattern.compile("(.*): (.*): [0-9]+, (.*): [0-9]+");
+        final char groupingSeparator = NumberFormatUtil.groupingSeparator();
+        final Pattern pattern = Pattern.compile("(.*): (.*): [0-9[" + groupingSeparator + "]]+, (.*): [0-9[" + groupingSeparator + "]]+");
         final List<String> argumentsArrayAsList = Arrays.asList(argumentsToSearch);
         final List<String> allSearchEngineNames = Arrays.stream(SearchEngineType.values()).map(SearchEngineType::getName).collect(Collectors.toList());
 

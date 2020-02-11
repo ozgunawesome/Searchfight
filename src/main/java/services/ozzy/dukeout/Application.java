@@ -1,10 +1,8 @@
 package services.ozzy.dukeout;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.text.NumberFormat;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
@@ -52,7 +50,7 @@ public class Application {
                     .collect(groupingBy(SearchResult::getQuery)) // group by query ie. Map<String, List<SearchResult>>
                     .forEach((query, resultList) ->
                             System.out.println(query + ": " + resultList.stream()
-                                    .map(x -> x.getSearchEngine().getName() + ": " + x.getResults())
+                                    .map(x -> x.getSearchEngine().getName() + ": " + NumberFormatUtil.format(x.getResults()))
                                     .collect(Collectors.joining(", "))));
 
             // Winners for each search engine
