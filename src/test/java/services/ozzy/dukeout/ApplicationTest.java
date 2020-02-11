@@ -5,14 +5,18 @@ import org.junit.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiConsumer;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
-import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 /**
  * Created by Özgün Ayaz on 2017-03-12.
@@ -59,11 +63,42 @@ public class ApplicationTest {
         testApplicationWithArguments((out, err) -> {
             // apparently ".net" will always win since Google will ignore the dot and crush it with 10x results
             assertTrue(out.contains("Total winner: .net"));
-            // Nothing should be printed to stderr
-            assertEquals("", err);
+            // No exceptions in stderr
+            assertFalse(err.contains("Exception"));
         }, "java", ".net");
     }
 
+    /**
+     * this is a very comprehensive test, going through the Bing API throttling logic, quotes in arguments,
+     * URL encoding them, as well as overall stability of the code.
+     * The quotation marks shall be taken care of by the shell when invoked through command line.
+     */
+    @Test
+    public void testApplicationWithLotsOfArguments() {
+        final String[] argumentsToSearch = {"java", ".net", "python", "javascript", "go", "kotlin", "perl", "ruby", "\"bill gates\"", "\"jeff bezos\"", "folding@home"};
+
+        final AtomicInteger linesThatMatch = new AtomicInteger(0);
+        final Pattern pattern = Pattern.compile("(.*): (.*): [0-9]+, (.*): [0-9]+");
+        final List<String> argumentsArrayAsList = Arrays.asList(argumentsToSearch);
+        final List<String> allSearchEngineNames = Arrays.stream(SearchEngineType.values()).map(SearchEngineType::getName).collect(Collectors.toList());
+
+        testApplicationWithArguments((out, err) -> {
+            assertTrue(out.contains("Total winner:")); // the test went all the way successfully and had a winner
+            Matcher matcher = pattern.matcher(out); // parse stdout with the regex above
+            while (matcher.find()) {
+                assertTrue(argumentsArrayAsList.contains(matcher.group(1))); // this search term was in the result list
+                assertTrue(allSearchEngineNames.contains(matcher.group(2)));
+                assertTrue(allSearchEngineNames.contains(matcher.group(3))); // the two search engines both were in the result list
+                linesThatMatch.incrementAndGet();
+            }
+            assertEquals(argumentsArrayAsList.size(), linesThatMatch.get()); // Returned result count equals input argument count
+            assertFalse(err.contains("Exception")); // No exceptions in stderr
+        }, argumentsToSearch);
+    }
+
+    /**
+     * this test should fail right away because at least 2 arguments required
+     */
     @Test(expected = IllegalArgumentException.class)
     public void testLessThan2Arguments() {
         testApplicationWithArguments((out, err) -> {}, "nope");
